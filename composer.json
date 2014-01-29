@@ -1,0 +1,32 @@
+{
+    "name": "expressodev/laravel-codeigniter-db",
+    "type": "library",
+    "description": "Integration layer allowing use of the Laravel database library in CodeIgniter applications",
+    "keywords": [
+        "ci",
+        "codeigniter",
+        "database",
+        "ee",
+        "expressionengine",
+        "illuminate",
+        "laravel",
+        "orm"
+    ],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Adrian Macneil",
+            "email": "adrian@adrianmacneil.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": { "Illuminate\\CodeIgniter" : "src/" }
+    },
+    "require": {
+        "illuminate/database": "~4.0"
+    },
+    "require-dev": {
+        "mockery/mockery": "~0.7",
+        "phpunit/phpunit": "~3.7.0"
+    }
+}
