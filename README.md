@@ -35,4 +35,4 @@ Illuminate\Database\Eloquent\Model::setConnectionResolver($resolver);
 
 ## License
 
-MIT
+[MIT License](https://github.com/expressodev/laravel-codeigniter-db/blob/master/LICENSE)
