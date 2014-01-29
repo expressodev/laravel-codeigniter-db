@@ -21,6 +21,18 @@ work correctly.
 
 ## Usage
 
+In your `composer.json` file:
+
+```json
+{
+    "require": {
+        "expressodev/laravel-codeigniter-db": "dev-master"
+    }
+}
+```
+
+In your application:
+
 ```php
 // use our mock PDO class if PDO is not enabled on this server
 if (!class_exists('PDO')) {
