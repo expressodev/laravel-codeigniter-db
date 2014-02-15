@@ -8,4 +8,5 @@ namespace Illuminate\CodeIgniter;
 interface FakePDO
 {
     const FETCH_ASSOC = 2;
+    const FETCH_OBJ = 5;
 }

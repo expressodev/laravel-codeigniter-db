@@ -108,6 +108,8 @@ class CodeIgniterConnection extends Connection
         switch ($fetchMode) {
             case PDO::FETCH_ASSOC:
                 return $result->result_array();
+            case PDO::FETCH_OBJ:
+                return $result->result();
         }
 
         throw new \BadMethodCallException("Unsupported fetch mode '$fetchMode'.");
