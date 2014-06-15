@@ -1,5 +1,8 @@
 # Laravel CodeIgniter Database Integration
 
+[![Build Status](https://travis-ci.org/expressodev/laravel-codeigniter-db.png?branch=master)](https://travis-ci.org/expressodev/laravel-codeigniter-db)
+[![Latest Stable Version](https://poser.pugx.org/expressodev/laravel-codeigniter-db/version.png)](https://packagist.org/packages/expressodev/laravel-codeigniter-db)
+
 This package allows you to use the excellent Laravel database library
 ([illuminate/database](https://github.com/illuminate/database)) inside your
 CodeIgniter applications.
