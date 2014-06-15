@@ -20,7 +20,7 @@
         }
     ],
     "autoload": {
-        "psr-0": { "Illuminate\\CodeIgniter" : "src/" }
+        "psr-4": { "Illuminate\\CodeIgniter\\" : "src/" }
     },
     "require": {
         "illuminate/database": "~4.1"
