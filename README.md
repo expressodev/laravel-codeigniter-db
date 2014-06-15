@@ -29,7 +29,7 @@ In your `composer.json` file:
 ```json
 {
     "require": {
-        "expressodev/laravel-codeigniter-db": "dev-master"
+        "expressodev/laravel-codeigniter-db": "~1.0"
     }
 }
 ```
