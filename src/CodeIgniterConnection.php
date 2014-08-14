@@ -76,6 +76,16 @@ class CodeIgniterConnection extends Connection
     }
 
     /**
+     * Reconnect to the database if a PDO connection is missing.
+     *
+     * @return void
+     */
+    protected function reconnectIfMissingConnection()
+    {
+        //Reconnection is not supported by CodeIgniter database driver, do nothing
+    }
+
+    /**
      * Run a select statement against the database.
      *
      * @param  string $query
