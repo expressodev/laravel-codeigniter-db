@@ -33,6 +33,7 @@ class CodeIgniterConnection extends Connection
         $driver = $this->ci->db->dbdriver;
         switch ($driver) {
             case 'mysql':
+            case 'mysqli':
                 return $this->withTablePrefix(new \Illuminate\Database\Query\Grammars\MySqlGrammar);
         }
 
@@ -49,6 +50,7 @@ class CodeIgniterConnection extends Connection
         $driver = $this->ci->db->dbdriver;
         switch ($driver) {
             case 'mysql':
+            case 'mysqli':
                 return $this->withTablePrefix(new \Illuminate\Database\Schema\Grammars\MySqlGrammar);
         }
 
