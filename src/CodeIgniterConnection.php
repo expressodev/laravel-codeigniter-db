@@ -34,6 +34,10 @@ class CodeIgniterConnection extends Connection
         switch ($driver) {
             case 'mysql':
             case 'mysqli':
+                if (class_exists('\Illuminate\Database\Query\Grammars\MySqlGrammar')) {
+                    return $this->withTablePrefix(new \Illuminate\Database\Query\Grammars\MySqlGrammar);
+                }
+
                 return $this->withTablePrefix(new \Illuminate\Database\Schema\Grammars\MySqlGrammar);
         }
 
