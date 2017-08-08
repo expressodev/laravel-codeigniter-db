@@ -26,7 +26,7 @@ class CodeIgniterConnection extends Connection
     /**
      * Get the default query grammar instance.
      *
-     * @return Illuminate\Database\Query\Grammars\Grammars\Grammar
+     * @return \Illuminate\Database\Grammar
      */
     protected function getDefaultQueryGrammar()
     {
@@ -34,7 +34,11 @@ class CodeIgniterConnection extends Connection
         switch ($driver) {
             case 'mysql':
             case 'mysqli':
-                return $this->withTablePrefix(new \Illuminate\Database\Query\Grammars\MySqlGrammar);
+                if (class_exists('\Illuminate\Database\Query\Grammars\MySqlGrammar')) {
+                    return $this->withTablePrefix(new \Illuminate\Database\Query\Grammars\MySqlGrammar);
+                }
+
+                return $this->withTablePrefix(new \Illuminate\Database\Schema\Grammars\MySqlGrammar);
         }
 
         throw new \InvalidArgumentException("Unknown CI database driver '$driver'");
@@ -43,7 +47,7 @@ class CodeIgniterConnection extends Connection
     /**
      * Get the default schema grammar instance.
      *
-     * @return Illuminate\Database\Schema\Grammars\Grammar
+     * @return \Illuminate\Database\Grammar
      */
     protected function getDefaultSchemaGrammar()
     {
@@ -60,7 +64,7 @@ class CodeIgniterConnection extends Connection
     /**
      * Get the default post processor instance.
      *
-     * @return Illuminate\Database\Query\Processors\Processor
+     * @return \Illuminate\Database\Query\Processors\Processor
      */
     protected function getDefaultPostProcessor()
     {
@@ -91,18 +95,20 @@ class CodeIgniterConnection extends Connection
      * Run a select statement against the database.
      *
      * @param  string $query
-     * @param  array  $bindings
+     * @param  array $bindings
+     * @param bool $useReadPdo
+     *
      * @return array
      */
-    public function select($query, $bindings = array())
+    public function select($query, $bindings = array(), $useReadPdo = true)
     {
         $self = $this;
 
-        return $this->run($query, $bindings, function($me, $query, $bindings) use ($self) {
-            if ($me->pretending()) return array();
+        return $this->run($query, $bindings, function($query, $bindings) use ($self) {
+            if ($self->pretending()) return array();
 
             // pass query to CodeIgniter database layer
-            $bindings = $me->prepareBindings($bindings);
+            $bindings = $self->prepareBindings($bindings);
 
             return $self->fetchResult($self->ci->db->query($query, $bindings));
         });
@@ -116,7 +122,7 @@ class CodeIgniterConnection extends Connection
      */
     public function fetchResult($result)
     {
-        $fetchMode = $this->getFetchMode();
+        $fetchMode = $this->fetchMode;
         switch ($fetchMode) {
             case PDO::FETCH_ASSOC:
                 return $result->result_array();
@@ -138,11 +144,11 @@ class CodeIgniterConnection extends Connection
     {
         $self = $this;
 
-        return $this->run($query, $bindings, function($me, $query, $bindings) use ($self) {
-            if ($me->pretending()) return true;
+        return $this->run($query, $bindings, function($query, $bindings) use ($self) {
+            if ($self->pretending()) return true;
 
             // pass query to CodeIgniter database layer
-            $bindings = $me->prepareBindings($bindings);
+            $bindings = $self->prepareBindings($bindings);
 
             return (bool) $self->ci->db->query($query, $bindings);
         });
@@ -159,11 +165,11 @@ class CodeIgniterConnection extends Connection
     {
         $self = $this;
 
-        return $this->run($query, $bindings, function($me, $query, $bindings) use ($self) {
-            if ($me->pretending()) return 0;
+        return $this->run($query, $bindings, function($query, $bindings) use ($self) {
+            if ($self->pretending()) return 0;
 
             // pass query to CodeIgniter database layer
-            $bindings = $me->prepareBindings($bindings);
+            $bindings = $self->prepareBindings($bindings);
             $self->ci->db->query($query, $bindings);
 
             // return number of rows affected
